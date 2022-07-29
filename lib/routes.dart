@@ -27,7 +27,7 @@ class RouteManager {
         );
       case finishPage:
         return MaterialPageRoute(
-          builder: (context) => FinishPage(fullname: "Full name", email: "Enter Email Address"),
+          builder: (context) => FinishPage(email: "Enter Email Address"),
         );
 
       default:

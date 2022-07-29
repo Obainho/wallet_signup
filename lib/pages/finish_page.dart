@@ -6,11 +6,9 @@ import '../widgets/widgets.dart';
 class FinishPage extends StatefulWidget {
   FinishPage({
     Key? key,
-    required this.fullname,
     required this.email,
   }) : super(key: key);
 
-  String fullname;
   String email;
 
   @override
@@ -18,28 +16,11 @@ class FinishPage extends StatefulWidget {
 }
 
 class _FinishPageState extends State<FinishPage> {
-  TextEditingController fullname = TextEditingController();
   TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmPassword = TextEditingController();
   bool _value = false;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    fullname.dispose();
-    email.dispose();
-    password.dispose();
-    confirmPassword.dispose();
-  }
-
-  var snackRegister = SnackBar(
-    content: const Text('Registration Successful'),
+  var snackLogin = SnackBar(
+    content: const Text('Login Successful'),
     backgroundColor: const Color.fromARGB(255, 58, 63, 66),
     duration: const Duration(seconds: 3),
     action: SnackBarAction(
@@ -52,22 +33,17 @@ class _FinishPageState extends State<FinishPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        actionsIconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
       body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 30.0, left: 30, right: 30),
             child: Column(
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 60),
                 Row(
                   children: const [
                     Text(
-                      'Register',
+                      'Login to Account',
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
                     ),
@@ -112,12 +88,6 @@ class _FinishPageState extends State<FinishPage> {
                 const Text('or'),
                 const SizedBox(height: 20),
                 InputTextField(
-                  controller: fullname,
-                  inputHint: widget.fullname,
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 10),
-                InputTextField(
                   controller: email,
                   inputHint: widget.email,
                   keyboardType: TextInputType.emailAddress,
@@ -129,12 +99,6 @@ class _FinishPageState extends State<FinishPage> {
                   keyboardType: TextInputType.text,
                 ),
                 const SizedBox(height: 10),
-                PasswordField(
-                  obscureText: true,
-                  inputHint: "Confirm Password",
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 15),
                 Row(
                   children: [
                     Container(
@@ -180,14 +144,14 @@ class _FinishPageState extends State<FinishPage> {
                     primary: const Color.fromARGB(163, 21, 97, 197),
                   ),
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(snackRegister);
+                    ScaffoldMessenger.of(context).showSnackBar(snackLogin);
                     Navigator.of(context).pushNamed(RouteManager.homePage);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Next',
+                        'Login',
                         style: GoogleFonts.mochiyPopPOne(
                           fontWeight: FontWeight.w300,
                           color: Colors.white,
@@ -200,7 +164,7 @@ class _FinishPageState extends State<FinishPage> {
                 Row(
                   children: const [
                     Text(
-                      'Already have an account?',
+                      'Do not have an account?',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -211,7 +175,7 @@ class _FinishPageState extends State<FinishPage> {
                 Row(
                   children: const [
                     Text(
-                      'LOGIN',
+                      'SIGNUP',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(163, 21, 97, 197),

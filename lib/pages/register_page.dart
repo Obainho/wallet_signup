@@ -19,14 +19,20 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
+    email;
   }
 
   @override
   void dispose() {
     super.dispose();
-    fullname.dispose();
     email.dispose();
   }
+
+  var snackRegister = const SnackBar(
+    content: Text('Registration Successful'),
+    backgroundColor: Color.fromARGB(255, 58, 63, 66),
+    duration: Duration(seconds: 3),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -191,11 +197,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => FinishPage(
-                                      fullname: fullname.text,
                                       email: email.text,
                                     ),
                                   ),
                                 );
+                                ScaffoldMessenger.of(context).showSnackBar(snackRegister);
                               },
                               child: const Text('Confirm'),
                             )
@@ -217,7 +223,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 90),
+                const SizedBox(height: 50),
                 Row(
                   children: const [
                     Text(
