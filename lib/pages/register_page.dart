@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 15),
                 Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 15,
                       child: Checkbox(
                         value: _value,
@@ -129,27 +129,38 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Text(
-                      "I've read and agreed to the ",
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                    const Text(
-                      "terms",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(163, 21, 97, 197),
-                      ),
-                    ),
-                    const Text(" of "),
-                    const Text(
-                      "privacy policy",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(163, 21, 97, 197),
+                    const Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "I've read and agreed to the ",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "terms",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(163, 21, 97, 197),
+                            ),
+                          ),
+                          TextSpan(
+                            text: " of ",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "privacy policy",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(163, 21, 97, 197),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -201,7 +212,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                   ),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackRegister);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackRegister);
                               },
                               child: const Text('Confirm'),
                             )
@@ -236,19 +248,33 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  children: const [
-                    Text(
-                      'LOGIN',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(163, 21, 97, 197),
+                  children: [
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => FinishPage(email: "Enter Email Address"),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Text(
+                            'LOGIN',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(163, 21, 97, 197),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 17,
+                            color: Color.fromARGB(163, 21, 97, 197),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 17,
-                      color: Color.fromARGB(163, 21, 97, 197),
                     ),
                   ],
                 )

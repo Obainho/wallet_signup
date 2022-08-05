@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wallet_design/routes.dart';
+import 'package:wallet_design/pages/register_page.dart';
+//import 'package:wallet_design/routes.dart';
 import '../widgets/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FinishPage extends StatefulWidget {
   FinishPage({
@@ -17,6 +19,7 @@ class FinishPage extends StatefulWidget {
 
 class _FinishPageState extends State<FinishPage> {
   TextEditingController email = TextEditingController();
+
   bool _value = false;
 
   var snackLogin = SnackBar(
@@ -29,6 +32,15 @@ class _FinishPageState extends State<FinishPage> {
       label: 'Undo',
     ),
   );
+
+  _launchURL(String url) async {
+    final Uri urlink = Uri.parse(url);
+    if (!await canLaunchUrl(urlink)) {
+      await launchUrl(urlink, mode: LaunchMode.inAppWebView);
+    } else {
+      throw 'Could not launch $urlink';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +113,7 @@ class _FinishPageState extends State<FinishPage> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 15,
                       child: Checkbox(
                         value: _value,
@@ -113,27 +125,38 @@ class _FinishPageState extends State<FinishPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Text(
-                      "I've read and agreed to the ",
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                    const Text(
-                      "terms",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(163, 21, 97, 197),
-                      ),
-                    ),
-                    const Text(" of "),
-                    const Text(
-                      "privacy policy",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(163, 21, 97, 197),
+                    const Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "I've read and agreed to the ",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "terms",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(163, 21, 97, 197),
+                            ),
+                          ),
+                          TextSpan(
+                            text: " of ",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "privacy policy",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(163, 21, 97, 197),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -144,8 +167,35 @@ class _FinishPageState extends State<FinishPage> {
                     primary: const Color.fromARGB(163, 21, 97, 197),
                   ),
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(snackLogin);
-                    Navigator.of(context).pushNamed(RouteManager.homePage);
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Confirm login'),
+                          content: Text(
+                            'Would you like to continue?',
+                            style: GoogleFonts.sanchez(fontSize: 15),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('No'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                const url = 'https://github.com';
+
+                                _launchURL(url);
+                              },
+                              child: const Text('Confirm'),
+                            )
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -173,19 +223,33 @@ class _FinishPageState extends State<FinishPage> {
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  children: const [
-                    Text(
-                      'SIGNUP',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(163, 21, 97, 197),
+                  children: [
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterPage(),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Text(
+                            'SIGNUP',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(163, 21, 97, 197),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 17,
+                            color: Color.fromARGB(163, 21, 97, 197),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 17,
-                      color: Color.fromARGB(163, 21, 97, 197),
                     ),
                   ],
                 )

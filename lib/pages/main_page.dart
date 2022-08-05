@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
                     Text(
                       'Get Started Now',
                       style: GoogleFonts.mochiyPopPOne(
-                        fontWeight: FontWeight.w300,
+                        fontWeight: FontWeight.w400,
                         color: Colors.blue,
                       ),
                     ),
